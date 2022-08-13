@@ -10,27 +10,58 @@
     </ion-header>
 
     <ion-content :fullscreen="true">
-      <div class="mainContent">
-        <ion-item> <ion-img :src="this.maListe[0].image"></ion-img> </ion-item><br />
-        <ion-label id="meal-title">{{ this.maListe[0].nom }}</ion-label
-        ><br /><br />
-        <ion-label id="ion-label">Origine: {{ this.maListe[0].origine }}</ion-label
-        ><br />
-        <ion-label id="ion-label">Catégorie: {{ this.maListe[0].categorie }}</ion-label
-        ><br /><br />
-        <ion-label id="title2">Ingrédients</ion-label><br />
-        <ul id="ingredientsList" v-for="item in this.maListe[0].ingredients" :key="item">
-          <li v-if="item.length > 1">
-            <small>{{ item }}</small>
+      <div id="mainContainer">
+        <div id="imageContainer">
+          <ion-img class="rounded" :src="this.maListe[0].image"></ion-img>
+        </div>
+
+        <br />
+        <br />
+        <ion-label class="titleOne">{{ this.maListe[0].nom }}</ion-label>
+
+        <br />
+        <br />
+        <div id="detailContainer">
+          <ion-label class="bubbleDiv">Origine: {{ this.maListe[0].origine }}</ion-label>
+          <ion-label class="bubbleDiv">Catégorie: {{ this.maListe[0].categorie }}</ion-label>
+        </div>
+
+        <br />
+        <br />
+        <br />
+        <br />
+        <ion-label class="titleOne">Ingrédients</ion-label><br />
+
+        <!-- <ul id="ingredientsList">
+          <li v-for="index in 10" :key="index">
+            <p>{{ this.maListe[0].ingredients[0] }}</p>
           </li>
-        </ul>
+        </ul> -->
+        <br />
+        <br />
+        <br />
+        <br />
+
+        <div class="testt">
+          <div class="test1">
+            <ul id="ingredientsList" v-for="item in this.maListe[0].measure" :key="item">
+              <span v-if="item.length > 1"> {{ item }}....... </span>
+            </ul>
+          </div>
+
+          <div class="test2">
+            <ul id="ingredientsList" v-for="item in this.maListe[0].ingredients" :key="item">
+              <span v-if="item.length > 1">{{ item }}</span>
+            </ul>
+          </div>
+        </div>
       </div>
     </ion-content>
   </ion-page>
 </template>
 
 <script lang="ts">
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButtons, IonMenuButton } from "@ionic/vue";
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButtons, IonMenuButton, IonImg, IonLabel } from "@ionic/vue";
 import { defineComponent } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
@@ -44,6 +75,8 @@ export default defineComponent({
     IonToolbar,
     IonButtons,
     IonMenuButton,
+    IonImg,
+    IonLabel,
   },
   setup() {
     const route = useRoute();
@@ -63,7 +96,8 @@ export default defineComponent({
   methods: {
     async getJSON() {
       let url = "https://www.themealdb.com/api/json/v1/1/random.php";
-      fetch(url)
+
+      await fetch(url)
         .then((response) => response.json())
         .then((data) => {
           console.log(data);
@@ -96,9 +130,32 @@ export default defineComponent({
               data.meals[0].strIngredient19,
               data.meals[0].strIngredient20,
             ],
+            measure: [
+              data.meals[0].strMeasure1,
+              data.meals[0].strMeasure2,
+              data.meals[0].strMeasure3,
+              data.meals[0].strMeasure4,
+              data.meals[0].strMeasure5,
+              data.meals[0].strMeasure6,
+              data.meals[0].strMeasure7,
+              data.meals[0].strMeasure8,
+              data.meals[0].strMeasure9,
+              data.meals[0].strMeasure10,
+              data.meals[0].strMeasure11,
+              data.meals[0].strMeasure12,
+              data.meals[0].strMeasure13,
+              data.meals[0].strMeasure14,
+              data.meals[0].strMeasure15,
+              data.meals[0].strMeasure16,
+              data.meals[0].strMeasure17,
+              data.meals[0].strMeasure18,
+              data.meals[0].strMeasure19,
+              data.meals[0].strMeasure20,
+            ],
           });
 
           this.maListe = temp;
+          console.log(this.maListe);
         });
     },
   },
@@ -106,56 +163,77 @@ export default defineComponent({
 </script>
 
 <style scoped>
-#container {
-  text-align: center;
-
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-#container strong {
-  font-size: 20px;
-  line-height: 26px;
-}
-
-#container p {
-  font-size: 16px;
-  line-height: 22px;
-
-  color: #8c8c8c;
-
-  margin: 0;
-}
-
-#container a {
-  text-decoration: none;
-}
-
-#meal-title {
-  font-size: x-large;
-  padding-left: 20px;
-}
-#title2 {
-  font-size: large;
-  padding-left: 20px;
-}
-
-#ion-label {
-  font-size: small;
-  color: #8c8c8c;
-  padding-left: 20px;
-}
-
-#ingredientsList {
-  padding-left: 55px;
-  line-height: 0px;
-  color: #8c8c8c;
-}
-
 /* Added CSS*/
-#mainContent {
+
+#mainContainer {
+  margin: auto;
+  margin-top: 40px;
+  text-align: center;
+}
+
+@media screen and (min-width: 0px) {
+  #imageContainer {
+    margin: auto;
+    border-radius: 75px;
+    overflow: hidden;
+    width: 50%;
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  #imageContainer {
+    margin: auto;
+    border-radius: 75px;
+    overflow: hidden;
+    width: 351px;
+  }
+}
+
+#detailContainer {
+  display: flex;
+  justify-content: space-between;
+  margin: auto;
+  width: 30%;
+  text-align: center;
+}
+
+#ingredientContainer {
+  border: 2px solid red;
+}
+
+.center {
+  margin: auto;
+  width: 50%;
+}
+
+.titleOne {
+  font-size: xx-large;
+  font-family: "Times New Roman", Times, serif;
+}
+
+.bubbleDiv {
+  border: 2px solid blue;
+  border-radius: 25px;
+  padding: 10px;
+}
+
+.testt {
+  display: flex;
+  margin: auto;
+  width: 50%;
+  border: 2px solid red;
+}
+
+.test1 {
+  flex: 1;
+  text-align: right;
+  border: 2px solid yellow;
+}
+
+.test2 {
+  flex: 1;
+  text-align: left;
+  padding-left: 0px;
+  border: 2px solid yellow;
 }
 </style>
