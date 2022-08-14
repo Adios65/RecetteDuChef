@@ -7,7 +7,7 @@
           <ion-menu-button color="primary"></ion-menu-button>
         </ion-buttons>
         <!-- TITRE   -->
-        <ion-title>Recette du moment</ion-title>
+        <ion-title class="labelColor">Recette du moment</ion-title>
       </ion-toolbar>
     </ion-header>
 
@@ -24,9 +24,13 @@
         <!--  MARK: DETAILS RECETTE-->
 
         <div id="detailContainer">
-          <ion-label class="bubbleDiv">Origine: {{ this.maListe[0].origine }}</ion-label>
-          <ion-label class="bubbleDiv">Catégorie: {{ this.maListe[0].categorie }}</ion-label>
+          <ion-label
+            >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Origine:&nbsp;{{ this.maListe[0].origine }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Catégorie:&nbsp;{{
+              this.maListe[0].categorie
+            }}</ion-label
+          >
         </div>
+
         <!-- MARK: INGREDIENTS RECETTE -->
         <br />
         <br />
@@ -56,7 +60,6 @@ import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButtons, IonMe
 import { defineComponent } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { loadingController } from "@ionic/vue";
-
 export default defineComponent({
   name: "HomePage",
   components: {
@@ -77,7 +80,6 @@ export default defineComponent({
   },
   data() {
     var emptyArray: string[] = [];
-
     return {
       maListe: [
         {
@@ -95,34 +97,26 @@ export default defineComponent({
       nbreInstruction: 0,
     };
   },
-
   ionViewDidEnter() {
     this.getJSON();
   },
-
   methods: {
     async getJSON() {
       const loading = await loadingController.create({
         message: "Attendre SVP...",
       });
-
       await loading.present();
-
       let url = "https://www.themealdb.com/api/json/v1/1/random.php";
-
       await fetch(url)
         .then((response) => response.json())
         .then((data) => {
           let instructionSplit = data.meals[0].strInstructions.split(".");
-
           var countInstruction = 0;
           for (var i = 0; i < instructionSplit.length - 1; i++) {
             instructionSplit[i] = i + "-" + instructionSplit[i] + ".";
             countInstruction++;
           }
-
           this.nbreInstruction = countInstruction;
-
           this.maListe[0].id = data.meals[0].idMeal;
           this.maListe[0].nom = data.meals[0].strMeal;
           this.maListe[0].origine = data.meals[0].strArea;
@@ -173,17 +167,13 @@ export default defineComponent({
             data.meals[0].strMeasure19,
             data.meals[0].strMeasure20,
           ];
-
           var countIng = 0;
-
           this.maListe[0].measure.forEach((element) => {
             if (element.length > 1) {
               countIng++;
             }
           });
-
           this.nbreItem = countIng;
-
           loading.dismiss();
         });
     },
@@ -193,7 +183,6 @@ export default defineComponent({
 
 <style scoped>
 /* Added CSS*/
-
 #mainContainer {
   margin: auto;
   margin-top: 40px;
@@ -207,6 +196,16 @@ export default defineComponent({
     overflow: hidden;
     width: 50%;
   }
+
+  #detailContainer {
+    color: orange;
+    margin: auto;
+    margin-top: 40px;
+    width: 200px;
+    text-align: center;
+    border: 2px solid turquoise;
+    border-radius: 25px;
+  }
 }
 
 @media screen and (min-width: 1000px) {
@@ -218,15 +217,6 @@ export default defineComponent({
   }
 }
 
-#detailContainer {
-  display: flex;
-  justify-content: space-between;
-  margin: auto;
-  margin-top: 40px;
-  width: 30%;
-  text-align: center;
-}
-
 #ingredientContainer {
   margin: auto;
   width: 100%;
@@ -234,32 +224,26 @@ export default defineComponent({
 }
 
 #instructionContainer {
+  color: orange;
   margin: auto;
   width: 50%;
   margin-top: 40px;
   text-align: justify;
 }
-
 .center {
   margin: auto;
   width: 50%;
 }
-
 .titleOne {
   font-size: xx-large;
+  color: turquoise;
   font-family: "Times New Roman", Times, serif;
 }
 
-.bubbleDiv {
-  border: 2px solid blue;
-  border-radius: 25px;
-  padding: 10px;
-}
-
 .bordered {
+  text-align: center;
   border: 2px solid red;
 }
-
 ul {
   list-style-type: none;
   padding: 0;
@@ -269,8 +253,8 @@ ul li {
   width: 100%;
   position: relative;
 }
-
 ul li span {
+  color: orange;
   position: absolute;
   right: 0;
   left: 50%;
@@ -279,11 +263,16 @@ ul li span {
   display: inline-block;
 }
 ul li span:first-child {
+  color: orange;
   position: absolute;
   left: 0;
   right: 50%;
   text-align: right;
   padding-right: 5px;
   display: inline-block;
+}
+
+.labelColor {
+  color: turquoise;
 }
 </style>

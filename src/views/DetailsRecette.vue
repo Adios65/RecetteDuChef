@@ -6,7 +6,7 @@
         <ion-buttons slot="start">
           <ion-back-button @click="this.router.back()"></ion-back-button>
         </ion-buttons>
-        <ion-title>Recette</ion-title>
+        <ion-title class="labelColor">Recette</ion-title>
       </ion-toolbar>
     </ion-header>
 
@@ -23,9 +23,13 @@
         <!--  MARK: DETAILS RECETTE-->
 
         <div id="detailContainer">
-          <ion-label class="bubbleDiv">Origine: {{ this.maListe[0].origine }}</ion-label>
-          <ion-label class="bubbleDiv">Catégorie: {{ this.maListe[0].categorie }}</ion-label>
+          <ion-label
+            >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Origine:&nbsp;{{ this.maListe[0].origine }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Catégorie:&nbsp;{{
+              this.maListe[0].categorie
+            }}</ion-label
+          >
         </div>
+
         <!-- MARK: INGREDIENTS RECETTE -->
         <br />
         <br />
@@ -189,10 +193,8 @@ export default defineComponent({
   },
 });
 </script>
-
 <style scoped>
 /* Added CSS*/
-
 #mainContainer {
   margin: auto;
   margin-top: 40px;
@@ -206,6 +208,16 @@ export default defineComponent({
     overflow: hidden;
     width: 50%;
   }
+
+  #detailContainer {
+    color: orange;
+    margin: auto;
+    margin-top: 40px;
+    width: 200px;
+    text-align: center;
+    border: 2px solid turquoise;
+    border-radius: 25px;
+  }
 }
 
 @media screen and (min-width: 1000px) {
@@ -217,15 +229,6 @@ export default defineComponent({
   }
 }
 
-#detailContainer {
-  display: flex;
-  justify-content: space-between;
-  margin: auto;
-  margin-top: 40px;
-  width: 30%;
-  text-align: center;
-}
-
 #ingredientContainer {
   margin: auto;
   width: 100%;
@@ -233,32 +236,26 @@ export default defineComponent({
 }
 
 #instructionContainer {
+  color: orange;
   margin: auto;
   width: 50%;
   margin-top: 40px;
   text-align: justify;
 }
-
 .center {
   margin: auto;
   width: 50%;
 }
-
 .titleOne {
   font-size: xx-large;
+  color: turquoise;
   font-family: "Times New Roman", Times, serif;
 }
 
-.bubbleDiv {
-  border: 2px solid blue;
-  border-radius: 25px;
-  padding: 10px;
-}
-
 .bordered {
+  text-align: center;
   border: 2px solid red;
 }
-
 ul {
   list-style-type: none;
   padding: 0;
@@ -268,8 +265,8 @@ ul li {
   width: 100%;
   position: relative;
 }
-
 ul li span {
+  color: orange;
   position: absolute;
   right: 0;
   left: 50%;
@@ -278,11 +275,16 @@ ul li span {
   display: inline-block;
 }
 ul li span:first-child {
+  color: orange;
   position: absolute;
   left: 0;
   right: 50%;
   text-align: right;
   padding-right: 5px;
   display: inline-block;
+}
+
+.labelColor {
+  color: turquoise;
 }
 </style>

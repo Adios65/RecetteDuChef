@@ -6,28 +6,28 @@
           <div>
             <ion-list>
               <!-- TITRE MENU -->
-              <ion-list-header>Mes recettes</ion-list-header>
+              <ion-list-header class="labelColor">Mes recettes</ion-list-header>
               <!-- CHOIX DU MENU -->
               <ion-menu-toggle :auto-hide="false">
                 <!-- 1111111111111 -->
                 <ion-item router-link="/home">
                   <ion-icon slot="start" :ios="storefront" :md="storefront"></ion-icon>
-                  <ion-label>Accueil</ion-label>
+                  <ion-label class="labelColor">Accueil</ion-label>
                 </ion-item>
                 <!-- 222222222222 -->
                 <ion-item router-link="/liste/chicken">
                   <ion-icon slot="start" :ios="logoTwitter" :md="logoTwitter"></ion-icon>
-                  <ion-label>Chicken</ion-label>
+                  <ion-label class="labelColor">Chicken</ion-label>
                 </ion-item>
                 <!-- 333333333333 -->
                 <ion-item router-link="/liste/seafood">
                   <ion-icon slot="start" :ios="fish" :md="fish"></ion-icon>
-                  <ion-label>Seafood</ion-label>
+                  <ion-label class="labelColor">Seafood</ion-label>
                 </ion-item>
                 <!-- 444444444444 -->
                 <ion-item router-link="/liste/dessert">
                   <ion-icon slot="start" :ios="iceCream" :md="iceCream"></ion-icon>
-                  <ion-label>Dessert</ion-label>
+                  <ion-label class="labelColor">Dessert</ion-label>
                 </ion-item>
               </ion-menu-toggle>
             </ion-list>
@@ -84,5 +84,9 @@ export default defineComponent({
 <style scoped>
 #menuBar {
   width: 100%;
+}
+
+.labelColor {
+  color: turquoise;
 }
 </style>

@@ -8,14 +8,14 @@
         </ion-buttons>
 
         <!-- TITRE DE CATEGORIE -->
-        <ion-title>{{ this.nomCategorie }}</ion-title>
+        <ion-title class="labelColor">{{ this.nomCategorie }}</ion-title>
       </ion-toolbar>
     </ion-header>
 
     <ion-content>
       <div id="ion-text-center">
         <!-- LISTE RECETTES -->
-        <ion-item class="itemRecette" v-for="(item, index) in this.maListe" :key="index" :value="item.id">
+        <ion-item v-for="(item, index) in this.maListe" :key="index" :value="item.id">
           <!-- IMAGE RECETTE -->
           <ion-avatar class="imageRecette">
             <ion-img :src="item.image"></ion-img>
@@ -126,5 +126,9 @@ export default defineComponent({
 
   padding-left: 10px;
   padding-right: 10px;
+}
+
+.labelColor {
+  color: turquoise;
 }
 </style>
