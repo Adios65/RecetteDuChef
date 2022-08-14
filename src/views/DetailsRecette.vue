@@ -11,7 +11,7 @@
     </ion-header>
 
     <ion-content :fullscreen="true">
-      <div id="mainContainer" class="bordered">
+      <div id="mainContainer">
         <!-- MARK: IMAGE -->
         <div id="imageContainer">
           <ion-img class="rounded" :src="this.maListe[0].image"></ion-img>
@@ -112,8 +112,6 @@ export default defineComponent({
       fetch(url)
         .then((response) => response.json())
         .then((data) => {
-          console.log(data);
-
           let instructionSplit = data.meals[0].strInstructions.split(".");
 
           var countInstruction = 0;

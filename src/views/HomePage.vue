@@ -113,8 +113,6 @@ export default defineComponent({
       await fetch(url)
         .then((response) => response.json())
         .then((data) => {
-          console.log(data);
-
           let instructionSplit = data.meals[0].strInstructions.split(".");
 
           var countInstruction = 0;
