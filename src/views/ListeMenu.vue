@@ -85,6 +85,7 @@ export default defineComponent({
     async getCategory() {
       let url = `https://www.themealdb.com/api/json/v1/1/filter.php?c=` + this.categorie;
       this.nomCategorie = this.categorie.toString().toUpperCase();
+
       fetch(url)
         .then((response) => response.json())
         .then((data) => {

@@ -2,6 +2,7 @@
   <ion-page>
     <ion-header :translucent="true">
       <ion-toolbar>
+        <!-- BOUTTON DE MENU -->
         <ion-buttons slot="start">
           <ion-back-button @click="this.router.back()"></ion-back-button>
         </ion-buttons>
@@ -28,10 +29,9 @@
         <!-- MARK: INGREDIENTS RECETTE -->
         <br />
         <br />
-
         <div id="ingredientContainer">
-          <ion-label class="titleOne"><u>Ingrédients</u></ion-label
-          ><br />
+          <ion-label class="titleOne"><u>Ingrédients</u></ion-label>
+          <br />
           <ul>
             <li v-for="index in this.nbreItem" :key="index">
               <span>{{ this.maListe[0].measure[index - 1] }}</span>
@@ -41,6 +41,7 @@
           </ul>
         </div>
 
+        <!-- MARK: INSTRUCTIONS RECETTE -->
         <div id="instructionContainer">
           <p v-for="index in this.nbreInstruction" :key="index">{{ this.maListe[0].steps[index] }}</p>
         </div>
@@ -53,7 +54,6 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButtons, IonBackButton, IonLabel, IonImg } from "@ionic/vue";
 import { defineComponent } from "vue";
 import { useRoute, useRouter } from "vue-router";
-
 import { loadingController } from "@ionic/vue";
 
 export default defineComponent({
