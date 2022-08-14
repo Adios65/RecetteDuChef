@@ -11,49 +11,38 @@
 
     <ion-content :fullscreen="true">
       <div id="mainContainer">
+        <!-- MARK: IMAGE -->
         <div id="imageContainer">
           <ion-img class="rounded" :src="this.maListe[0].image"></ion-img>
         </div>
-
+        <!--  MARK: TITRE RECETTE-->
         <br />
         <br />
         <ion-label class="titleOne">{{ this.maListe[0].nom }}</ion-label>
+        <!--  MARK: DETAILS RECETTE-->
 
-        <br />
-        <br />
         <div id="detailContainer">
           <ion-label class="bubbleDiv">Origine: {{ this.maListe[0].origine }}</ion-label>
           <ion-label class="bubbleDiv">Catégorie: {{ this.maListe[0].categorie }}</ion-label>
         </div>
-
-        <br />
-        <br />
-        <br />
-        <br />
-        <ion-label class="titleOne">Ingrédients</ion-label><br />
-
-        <!-- <ul id="ingredientsList">
-          <li v-for="index in 10" :key="index">
-            <p>{{ this.maListe[0].ingredients[0] }}</p>
-          </li>
-        </ul> -->
-        <br />
-        <br />
+        <!-- MARK: INGREDIENTS RECETTE -->
         <br />
         <br />
 
-        <div class="testt">
-          <div class="test1">
-            <ul id="ingredientsList" v-for="item in this.maListe[0].measure" :key="item">
-              <span v-if="item.length > 1"> {{ item }}....... </span>
-            </ul>
-          </div>
+        <div id="ingredientContainer">
+          <ion-label class="titleOne"><u>Ingrédients</u></ion-label
+          ><br />
+          <ul>
+            <li v-for="index in this.nbreItem" :key="index">
+              <span>{{ this.maListe[0].measure[index - 1] }}</span>
+              -
+              <span>{{ this.maListe[0].ingredients[index - 1] }}</span>
+            </li>
+          </ul>
+        </div>
 
-          <div class="test2">
-            <ul id="ingredientsList" v-for="item in this.maListe[0].ingredients" :key="item">
-              <span v-if="item.length > 1">{{ item }}</span>
-            </ul>
-          </div>
+        <div id="instructionContainer">
+          <p v-for="index in this.nbreInstruction" :key="index">{{ this.maListe[0].steps[index] }}</p>
         </div>
       </div>
     </ion-content>
@@ -64,6 +53,8 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButtons, IonMenuButton, IonImg, IonLabel } from "@ionic/vue";
 import { defineComponent } from "vue";
 import { useRoute, useRouter } from "vue-router";
+
+import { loadingController } from "@ionic/vue";
 
 export default defineComponent({
   name: "HomePage",
@@ -84,8 +75,23 @@ export default defineComponent({
     return { route, router };
   },
   data() {
+    var emptyArray: string[] = [];
+
     return {
-      maListe: [{}],
+      maListe: [
+        {
+          id: "",
+          nom: "",
+          origine: "",
+          categorie: "",
+          image: "",
+          steps: emptyArray,
+          ingredients: emptyArray,
+          measure: emptyArray,
+        },
+      ],
+      nbreItem: 0,
+      nbreInstruction: 0,
     };
   },
 
@@ -95,67 +101,91 @@ export default defineComponent({
 
   methods: {
     async getJSON() {
+      const loading = await loadingController.create({
+        message: "Attendre SVP...",
+      });
+
+      await loading.present();
+
       let url = "https://www.themealdb.com/api/json/v1/1/random.php";
 
       await fetch(url)
         .then((response) => response.json())
         .then((data) => {
           console.log(data);
-          let temp: object[] = [];
-          temp.push({
-            id: data.meals[0].idMeal,
-            nom: data.meals[0].strMeal,
-            origine: data.meals[0].strArea,
-            categorie: data.meals[0].strCategory,
-            image: data.meals[0].strMealThumb,
-            ingredients: [
-              data.meals[0].strIngredient1,
-              data.meals[0].strIngredient2,
-              data.meals[0].strIngredient3,
-              data.meals[0].strIngredient4,
-              data.meals[0].strIngredient5,
-              data.meals[0].strIngredient6,
-              data.meals[0].strIngredient7,
-              data.meals[0].strIngredient8,
-              data.meals[0].strIngredient9,
-              data.meals[0].strIngredient10,
-              data.meals[0].strIngredient11,
-              data.meals[0].strIngredient12,
-              data.meals[0].strIngredient13,
-              data.meals[0].strIngredient14,
-              data.meals[0].strIngredient15,
-              data.meals[0].strIngredient16,
-              data.meals[0].strIngredient17,
-              data.meals[0].strIngredient18,
-              data.meals[0].strIngredient19,
-              data.meals[0].strIngredient20,
-            ],
-            measure: [
-              data.meals[0].strMeasure1,
-              data.meals[0].strMeasure2,
-              data.meals[0].strMeasure3,
-              data.meals[0].strMeasure4,
-              data.meals[0].strMeasure5,
-              data.meals[0].strMeasure6,
-              data.meals[0].strMeasure7,
-              data.meals[0].strMeasure8,
-              data.meals[0].strMeasure9,
-              data.meals[0].strMeasure10,
-              data.meals[0].strMeasure11,
-              data.meals[0].strMeasure12,
-              data.meals[0].strMeasure13,
-              data.meals[0].strMeasure14,
-              data.meals[0].strMeasure15,
-              data.meals[0].strMeasure16,
-              data.meals[0].strMeasure17,
-              data.meals[0].strMeasure18,
-              data.meals[0].strMeasure19,
-              data.meals[0].strMeasure20,
-            ],
+
+          let instructionSplit = data.meals[0].strInstructions.split(".");
+
+          var countInstruction = 0;
+          for (var i = 0; i < instructionSplit.length - 1; i++) {
+            instructionSplit[i] = i + "-" + instructionSplit[i] + ".";
+            countInstruction++;
+          }
+
+          this.nbreInstruction = countInstruction;
+
+          this.maListe[0].id = data.meals[0].idMeal;
+          this.maListe[0].nom = data.meals[0].strMeal;
+          this.maListe[0].origine = data.meals[0].strArea;
+          this.maListe[0].categorie = data.meals[0].strCategory;
+          this.maListe[0].image = data.meals[0].strMealThumb;
+          this.maListe[0].steps = instructionSplit;
+          this.maListe[0].ingredients = [
+            data.meals[0].strIngredient1,
+            data.meals[0].strIngredient2,
+            data.meals[0].strIngredient3,
+            data.meals[0].strIngredient4,
+            data.meals[0].strIngredient5,
+            data.meals[0].strIngredient6,
+            data.meals[0].strIngredient7,
+            data.meals[0].strIngredient8,
+            data.meals[0].strIngredient9,
+            data.meals[0].strIngredient10,
+            data.meals[0].strIngredient11,
+            data.meals[0].strIngredient12,
+            data.meals[0].strIngredient13,
+            data.meals[0].strIngredient14,
+            data.meals[0].strIngredient15,
+            data.meals[0].strIngredient16,
+            data.meals[0].strIngredient17,
+            data.meals[0].strIngredient18,
+            data.meals[0].strIngredient19,
+            data.meals[0].strIngredient20,
+          ];
+          this.maListe[0].measure = [
+            data.meals[0].strMeasure1,
+            data.meals[0].strMeasure2,
+            data.meals[0].strMeasure3,
+            data.meals[0].strMeasure4,
+            data.meals[0].strMeasure5,
+            data.meals[0].strMeasure6,
+            data.meals[0].strMeasure7,
+            data.meals[0].strMeasure8,
+            data.meals[0].strMeasure9,
+            data.meals[0].strMeasure10,
+            data.meals[0].strMeasure11,
+            data.meals[0].strMeasure12,
+            data.meals[0].strMeasure13,
+            data.meals[0].strMeasure14,
+            data.meals[0].strMeasure15,
+            data.meals[0].strMeasure16,
+            data.meals[0].strMeasure17,
+            data.meals[0].strMeasure18,
+            data.meals[0].strMeasure19,
+            data.meals[0].strMeasure20,
+          ];
+
+          var countIng = 0;
+
+          this.maListe[0].measure.forEach((element) => {
+            if (element.length > 1) {
+              countIng++;
+            }
           });
 
-          this.maListe = temp;
-          console.log(this.maListe);
+          this.nbreItem = countIng;
+
+          loading.dismiss();
         });
     },
   },
@@ -193,12 +223,22 @@ export default defineComponent({
   display: flex;
   justify-content: space-between;
   margin: auto;
+  margin-top: 40px;
   width: 30%;
   text-align: center;
 }
 
 #ingredientContainer {
-  border: 2px solid red;
+  margin: auto;
+  width: 100%;
+  text-align: center;
+}
+
+#instructionContainer {
+  margin: auto;
+  width: 50%;
+  margin-top: 40px;
+  text-align: justify;
 }
 
 .center {
@@ -217,23 +257,34 @@ export default defineComponent({
   padding: 10px;
 }
 
-.testt {
-  display: flex;
-  margin: auto;
-  width: 50%;
+.bordered {
   border: 2px solid red;
 }
 
-.test1 {
-  flex: 1;
-  text-align: right;
-  border: 2px solid yellow;
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+ul li {
+  list-style-type: none;
+  width: 100%;
+  position: relative;
 }
 
-.test2 {
-  flex: 1;
+ul li span {
+  position: absolute;
+  right: 0;
+  left: 50%;
   text-align: left;
-  padding-left: 0px;
-  border: 2px solid yellow;
+  padding-left: 5px;
+  display: inline-block;
+}
+ul li span:first-child {
+  position: absolute;
+  left: 0;
+  right: 50%;
+  text-align: right;
+  padding-right: 5px;
+  display: inline-block;
 }
 </style>
