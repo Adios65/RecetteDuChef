@@ -13,8 +13,8 @@
   </tr>
     <tr>
     <td><img src="/screenshots/screenshot7.png" width=270 height=560></td>
-    <td><img src="/screenshots/screenshot8.png" width=270 height=560></td>
     <td><img src="/screenshots/screenshot9.png" width=270 height=560></td>
+    <td><img src="/screenshots/screenshot10.png" width=270 height=560></td>
   </tr>
 
  </table>
