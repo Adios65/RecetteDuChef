@@ -1,0 +1,7 @@
+{
+  "name": "RecettesDuChef",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue"
+}
