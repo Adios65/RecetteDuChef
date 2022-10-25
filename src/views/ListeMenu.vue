@@ -3,7 +3,7 @@
     <ion-header :translucent="true">
       <ion-toolbar color="ion-color-dark">
         <!-- BOUTTON DE RETOUR -->
-        <ion-buttons slot="start">
+        <ion-buttons slot="start" class="labelColor">
           <ion-back-button @click="this.router.back()"></ion-back-button>
         </ion-buttons>
 
@@ -105,7 +105,7 @@ export default defineComponent({
 <style scoped>
 .labelNomRecette {
   --background: black !important;
-  --color: var(--ion-color-primary-shade);
+  --color: #f64444;
 
   border-radius: 20px;
   overflow: hidden;
@@ -129,6 +129,6 @@ export default defineComponent({
 }
 
 .labelColor {
-  color: turquoise;
+  color: #f64444;
 }
 </style>

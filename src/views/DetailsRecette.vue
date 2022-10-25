@@ -38,16 +38,17 @@
           <br />
           <ul>
             <li v-for="index in this.nbreItem" :key="index">
-              <span>{{ this.maListe[0].measure[index - 1] }}</span>
-              -
-              <span>{{ this.maListe[0].ingredients[index - 1] }}</span>
+              <span>{{this.maListe[0].measure[index - 1]}}</span>
+              - &nbsp;
+              <span>{{ this.maListe[0].ingredients[index - 1]}}</span>
             </li>
           </ul>
         </div>
 
         <!-- MARK: INSTRUCTIONS RECETTE -->
         <div id="instructionContainer">
-          <p v-for="index in this.nbreInstruction" :key="index">{{ this.maListe[0].steps[index] }}</p>
+          <ion-label class="titleOne"><u>Préparations</u></ion-label>
+          <p v-for="index in this.nbreInstruction" :key="index">{{this.maListe[0].steps[index]}}</p>
         </div>
       </div>
     </ion-content>
@@ -210,12 +211,12 @@ export default defineComponent({
   }
 
   #detailContainer {
-    color: orange;
+    color: rgb(255, 245, 227);
     margin: auto;
     margin-top: 40px;
     width: 200px;
     text-align: center;
-    border: 2px solid turquoise;
+    border: 2px solid #f64444;
     border-radius: 25px;
   }
 }
@@ -236,7 +237,7 @@ export default defineComponent({
 }
 
 #instructionContainer {
-  color: orange;
+  color: rgb(255, 242, 217);
   margin: auto;
   width: 50%;
   margin-top: 40px;
@@ -248,7 +249,7 @@ export default defineComponent({
 }
 .titleOne {
   font-size: xx-large;
-  color: turquoise;
+  color: #f64444;
   font-family: "Times New Roman", Times, serif;
 }
 
@@ -266,7 +267,7 @@ ul li {
   position: relative;
 }
 ul li span {
-  color: orange;
+  color: rgb(255, 241, 214);
   position: absolute;
   right: 0;
   left: 50%;
@@ -275,7 +276,7 @@ ul li span {
   display: inline-block;
 }
 ul li span:first-child {
-  color: orange;
+  color: rgb(255, 239, 208);
   position: absolute;
   left: 0;
   right: 50%;
@@ -285,6 +286,6 @@ ul li span:first-child {
 }
 
 .labelColor {
-  color: turquoise;
+  color: #f64444;
 }
 </style>

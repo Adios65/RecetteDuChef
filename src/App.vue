@@ -87,6 +87,6 @@ export default defineComponent({
 }
 
 .labelColor {
-  color: turquoise;
+  color: rgb(253, 114, 119);
 }
 </style>
